@@ -10,8 +10,8 @@ class HomeActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        txt_home_id.text = MySharedPreferences.getSignup_Id(this)
-        txt_home_passwd.text = MySharedPreferences.getSignup_Pass(this)
+        txt_home_id.text = "ID : " + MySharedPreferences.getSignup_Id(this)
+        txt_home_passwd.text = "PW : " + MySharedPreferences.getSignup_Pass(this)
 
         // 로그아웃 버튼 이벤트
         btn_home_logout.setOnClickListener {
