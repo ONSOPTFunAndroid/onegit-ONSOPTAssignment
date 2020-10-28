@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_home_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="id"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_home_title" />
+
+    <TextView
+        android:id="@+id/txt_home_passwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="passwd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/txt_home_id"
+        app:layout_constraintStart_toStartOf="@+id/txt_home_id"
+        app:layout_constraintTop_toBottomOf="@+id/txt_home_id" />
+
+    <Button
+        android:id="@+id/btn_home_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="로그아웃"
+        app:layout_constraintEnd_toEndOf="@+id/txt_home_passwd"
+        app:layout_constraintStart_toStartOf="@+id/txt_home_passwd"
+        app:layout_constraintTop_toBottomOf="@+id/txt_home_passwd" />
+
+    <TextView
+        android:id="@+id/txt_home_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOME"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11" />
+
+    <Button
+        android:id="@+id/btn_home_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="종료"
+        app:layout_constraintEnd_toEndOf="@+id/btn_home_logout"
+        app:layout_constraintStart_toStartOf="@+id/btn_home_logout"
+        app:layout_constraintTop_toBottomOf="@+id/btn_home_logout" />
+</androidx.constraintlayout.widget.ConstraintLayout>
