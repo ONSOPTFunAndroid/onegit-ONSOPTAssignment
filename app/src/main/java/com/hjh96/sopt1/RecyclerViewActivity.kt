@@ -20,8 +20,7 @@ class RecyclerViewActivity : AppCompatActivity() {
         main_rcv.itemTouchHelper(profileAdapter) // itemTouchHelper 사용
         main_rcv.apply{
             adapter = profileAdapter // RecyclerView의 adapter에 profileAdapter를 세팅
-            layoutManager = LinearLayoutManager(this@RecyclerViewActivity) // RecyclerView의 배치 방향을 LinearLayoutManager로 설정, default로 vertical
-            MySharedPreferences.setLayout(this@RecyclerViewActivity, "0") // 0 -> Linear
+            layoutManager = GridLayoutManager(this@RecyclerViewActivity,3) // RecyclerView의 배치 방향을 LinearLayoutManager로 설정, default로 vertical
         }
         // 아래 코드와 동일
 //        main_rcv.adapter = profileAdapter

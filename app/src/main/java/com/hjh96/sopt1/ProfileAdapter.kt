@@ -10,7 +10,7 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
     var data = mutableListOf<ProfileData>() // ProfileData를 가져옴
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.activity_profile,parent,false)
+        val view = LayoutInflater.from(context).inflate(R.layout.activity_gridprofile,parent,false)
         return ProfileViewHolder(view)
     }
 
