@@ -42,6 +42,19 @@ object MySharedPreferences {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         return prefs.getBoolean("autologin", false)
     }
+
+    fun setLayout(context: Context, input: String) { // default 0 : linearLayout
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = prefs.edit()
+        editor.putString("layout", input)
+        editor.apply()
+    }
+
+    fun getLayout(context: Context): String {
+        val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return prefs.getString("layout", "0").toString()
+    }
+
     fun clearUser(context: Context) {
         val prefs : SharedPreferences = context.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = prefs.edit()

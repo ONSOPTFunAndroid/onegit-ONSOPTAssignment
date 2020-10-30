@@ -18,7 +18,7 @@ class SignUpActivity : AppCompatActivity() {
             val id = edt_signup_id.text.toString()
             val passwd = edt_signup_passwd.text.toString()
 
-            if(name.isNullOrEmpty() || id.isNullOrEmpty() || passwd.isNullOrEmpty())
+            if(name.isEmpty() || id.isEmpty() || passwd.isEmpty())
                 Toast.makeText(this,"빈칸이 있습니다.", Toast.LENGTH_SHORT).show()
             else {
                 Toast.makeText(this, "회원가입 완료", Toast.LENGTH_SHORT).show() // 모든 사항이 적혔으면 intent.puExtra를 사용하여 id와 passwd 전달
