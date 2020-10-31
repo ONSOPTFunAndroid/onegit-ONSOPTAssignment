@@ -3,11 +3,11 @@ package com.hjh96.sopt1
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-fun RecyclerView.itemTouchHelper(adapter : RecyclerView.Adapter<ProfileViewHolder>) {
+fun itemTouchHelper(adapter : ProfileAdapter) : ItemTouchHelper{
     val helper = ItemTouchHelper(object :
         ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
-            0
+            ItemTouchHelper.START
         ) {
         override fun onMove( // 움직이는 것
             recyclerView: RecyclerView,
@@ -20,10 +20,9 @@ fun RecyclerView.itemTouchHelper(adapter : RecyclerView.Adapter<ProfileViewHolde
             return false
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { // 삭제
-//            val del_position = viewHolder.adapterPosition
-//            remove(del_position);
-//            adapter.notifyItemRemoved(del_position);
+            adapter.data.removeAt(viewHolder.adapterPosition)
+            adapter.notifyItemRemoved(viewHolder.adapterPosition)
         }
     })
-    helper.attachToRecyclerView(this)
+    return helper
 }
