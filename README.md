@@ -1,6 +1,12 @@
 # ON SOPT 27th Android Assignment
 
+</br>
 
+* [1주차 과제](#Seminar 1)
+
+* [2주차 과제](#Seminar 2)
+
+</br>
 
 ## Seminar 1
 
@@ -426,6 +432,7 @@ class RecyclerViewActivity : AppCompatActivity() {
 > ProfileAdapter.kt
 
 1. LayoutChange() 메소드를 사용하여 LinearLayout과 GridLayout을 교체할 수 있게 해줌.
+
 
 ```Kotlin
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileViewHolder>()  {
