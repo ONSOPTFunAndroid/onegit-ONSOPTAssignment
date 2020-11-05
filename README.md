@@ -23,7 +23,7 @@
 2. SignUpActivity의 종료와 동시에 데이터를 받아오기 위해 startActivityForResult()를 사용.
 3. 기존에 startActivity()로 호출하던 것을 startActivityForResult()로 하출하면서 인수를 하나 더 추가.
 4. 이 인수는 0이상의 integer 값으로 추후 onActivityResult() 메소드에도 동일한 값이 전달되며 이를 통해 하나의 onActivityResult()메소드에서 여러 개의 startActivityForResult()를 구분할 수 있음.
-5.  해당 코드에서는 인수를 companion object를 사용하여 정적 변수로 초기화.
+5. 해당 코드에서는 인수를 companion object를 사용하여 정적 변수로 초기화.
 
 ```Kotlin
 // 회원가입 텍스트뷰 이벤트
@@ -45,7 +45,7 @@ companion object { // companion object를 사용하면 자바에서 정적 변�
 
 2. 모든 값이 EditTextView에 전부 입력되면 intent.putExtra() 메소드를 호출하여 key에 value를 저장하고 setResult() 메소드를 호출하여 결과 코드와 intent를 세팅. 결과 코드에서 RESULT_OK와 RESULT_CANCEL 모두 Activity의 멤버 변수임. (이때 requestCode(요청 코드)는 따로 세팅해주지 않아도 MainActivity로 함께 전달됨.)
 
-3.  finish()로 현재 액티비티를 종료하면 MainActivity로 돌아옴.
+3. finish()로 현재 액티비티를 종료하면 MainActivity로 돌아옴.
 
 ```Kotlin
 		// 회원가입 버튼 이벤트
@@ -263,7 +263,7 @@ if(MySharedPreferences.getAutologin(this)) { // 자동로그인이 표시되어 
 
 ## Seminar 2
 
-###### 제출 일자 : 2020.10.30
+###### 제출 일자 : 2020.10.30 (remove기능은 31일)
 
 ### 실행 화면
 
@@ -273,7 +273,297 @@ if(MySharedPreferences.getAutologin(this)) { // 자동로그인이 표시되어 
 
 ### 코드 설명
 
+**RecyclerView**
 
+> ProfileData.kt
 
+1. 데이터 객체인 data class 생성.
 
+2. Parcelable
+
+   Android SDK의 인터페이스.
+
+   Percelize를 사용하여 수동으로 해줘야할 작업들을 간소화.
+
+   데이터 전송 시 용이함.
+
+```Kotlin
+@Parcelize
+data class ProfileData(
+    val title : String,
+    val subTitle : String,
+    val content : String
+) : Parcelable
+```
+
+</br>
+
+> ProfileViewHolder.kt
+
+1. Adapter가 data class에 있는 데이터를 layout(아이템뷰)에 Bind.
+2. ProfileViewHolder는 아이템뷰에 있는 텍스트뷰 id를 요소로 받음.
+3. Adapter가 onBind() 메소드를 이용하여 data class에 있는 데이터를 해당 아이템뷰에 있는 텍스트뷰에 저장
+
+```Kotlin
+class ProfileViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    private val title : TextView = itemView.findViewById(R.id.txt_profile_title)
+    private val subTitle = itemView.findViewById<TextView>(R.id.txt_profile_subtiltle)
+
+    fun onBind(data : ProfileData){ //Adapter에서 함수 호출, 실질적으로 데이터를 요소들에 저장하는 함수
+        title.text = data.title
+        subTitle.text = data.subTitle
+    }
+}
+```
+
+</br>
+
+> ProfileAdapter.kt
+
+1. ProfileViewHolder를 생성하고 불러온 ProfileData를 ProfileViewHolder에 저장하는 역할
+
+2. onCreateViewHolder(), getItemCount(),  onBindViewHolder() 메소드는 무조건 override 해야됨.
+
+3. onCreateViewHolder()
+
+   아이템뷰를 가진 ProfileViewHolder를 생성
+
+   itemView.setOnClickListener를 통해 해당 adapterPosition에 해당하는 데이터를 가져와서 DetailProfileActivity에 intent.puExtra() 데이터를 저장 후 startActivity(intent)로 인텐트 전송
+
+4. getItemCount()
+
+   아이템 개수를 가져오는 메소드
+
+5. onBindViewHolder()
+
+   실질적으로 데이터를 뷰에 저장하는 메소드
+
+```Kotlin
+class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileViewHolder>()  {
+
+    var data = mutableListOf<ProfileData>() // ProfileData를 가져옴
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.activity_profile,parent,false)
+        return ProfileViewHolder(view).apply {
+            // item을 클릭하면 상세 화면으로 이동
+            itemView.setOnClickListener {
+                val curPosition : Int = adapterPosition
+                val profile : ProfileData = data.get(curPosition)
+                val intent = Intent(context, DetailProfileActivity::class.java)
+
+                intent.putExtra("profile", profile)
+                context.startActivity(intent)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int = data.size // 데이터 사이즈 == 아이템 개수
+//    override fun getItemCount(): Int {
+//        return data.size
+//    } 같은 코드
+
+    // 실질적으로 데이터를 뷰에 저장
+    override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
+        holder.onBind(data[position])
+    }
+}
+```
+
+</br>
+
+> RecyclerViewActivity.kt
+
+1. recyclerview layout을 시작.
+2. profileAdapter에 context로 this(RecyclerViewActivity)를 대입.
+3. main_rcv는 RecyclreView의 id임
+4. main_rcv의 adapter에 profileAdapter를 세팅, layoutManager는 LinearLayoutManager로 세팅 (default = vertical)
+5. profileAdapter에 데이터를 저장
+6. Adapter에 데이터가 갱신되면 알려줌.
+
+```Kotlin
+class RecyclerViewActivity : AppCompatActivity() {
+    private lateinit var profileAdapter : ProfileAdapter // lateinit으로 초기화를 늦춤
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_recyclerview)
+
+        profileAdapter = ProfileAdapter(this) // this = RecyclerViewActivity
+
+        main_rcv.apply{
+            adapter = profileAdapter // RecyclerView의 adapter에 profileAdapter를 세팅
+            layoutManager = LinearLayoutManager(this@RecyclerViewActivity) // RecyclerView의 배치 방향을 LinearLayoutManager로 설정, default로 vertical
+        }
+        // 아래 코드와 동일
+//        main_rcv.adapter = profileAdapter
+//        main_rcv.layoutManager = LinearLayoutManager(this)
+
+        profileAdapter.data = mutableListOf( // Adapter의 data 리스트에 데이터 저장
+            ProfileData("이름", "한재현", "한재현입니다."),
+            ProfileData("나이", "25", "1996. 06. 01"),
+            ProfileData("파트", "안드로이드", "안드루와~"),
+            ProfileData("Github", "www.github.com/wogus0333", "깃터디지만 깃알못입니다."),
+            ProfileData("phone", "010-2384-3932", "장난전화 금지"),
+            ProfileData("sopt", "www.sopt.org", "27th ON SOPT"),
+            ProfileData("insta", "www.instagram.com/onejh96__", "follow me")
+        )
+        profileAdapter.notifyDataSetChanged() // Adapter에 데이터가 갱신되었다고 알려주기
+    }
+}
+```
+
+</br>
+
+**GridLayout**
+
+> Item_gridprofile.xml
+
+1. GridLayout으로 나타낼 ItemView를 생성.
+
+</br>
+
+> ProfileAdapter.kt
+
+1. LayoutChange() 메소드를 사용하여 LinearLayout과 GridLayout을 교체할 수 있게 해줌.
+
+```Kotlin
+class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileViewHolder>()  {
+	...
+    var layoutItem = R.layout.activity_profile
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
+        val view = LayoutInflater.from(context).inflate(layoutItem,parent,false)
+        return ProfileViewHolder(view).apply {
+            // item을 클릭하면 상세 화면으로 이동
+            itemView.setOnClickListener {
+                val curPosition : Int = adapterPosition
+                val profile : ProfileData = data.get(curPosition)
+                val intent = Intent(context, DetailProfileActivity::class.java)
+
+                intent.putExtra("profile", profile)
+                context.startActivity(intent)
+            }
+        }
+    }
+
+   ....
+
+    fun LayoutChange(layoutItem:Int){
+        this.layoutItem = layoutItem
+    }
+}
+```
+
+</br>
+
+> RecyclerViewActivity.kt
+
+1. onCreateOptionsMenu() 메소드를 override하여 옵션메뉴 리소스 지정
+2. linear menu item을 누르면 ProfileAdapter.kr에서 만든 LayoutChange() 메소드를 사용하여 LinearLayout으로 설정한 후 LinearLayoutManager 사용.
+3. grid menu item을 누르면 ProfileAdapter.kr에서 만든 LayoutChange() 메소드를 사용하여 GirdLayout으로 설정한 후 GridLayoutManager 사용.
+
+```Kotlin
+class RecyclerViewActivity : AppCompatActivity() {
+    
+    ...
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean { // 옵션메뉴 리소스 지정
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { // 옵션 메뉴의 처리
+        when(item?.itemId){
+            R.id.item_menu_logout -> { // 로그아웃 버튼 이벤트
+                MySharedPreferences.setAutologin(this,false)
+                finish()
+            }
+            R.id.item_menu_exit -> { // 종료 버튼 이벤트
+                ActivityCompat.finishAffinity(this)
+                System.exit(0)
+            }
+            R.id.item_menu_linear -> {
+                profileAdapter.LayoutChange(R.layout.activity_profile)
+                main_rcv.adapter = profileAdapter
+                main_rcv.layoutManager = LinearLayoutManager(this@RecyclerViewActivity)
+            }
+            R.id.item_menu_grid -> {
+                profileAdapter.LayoutChange(R.layout.activity_gridprofile)
+                main_rcv.adapter = profileAdapter
+                main_rcv.layoutManager = GridLayoutManager(this@RecyclerViewActivity, 3)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
+```
+
+</br>
+
+**ItemTouchHelper**
+
+> itemTouchHelper.kt
+
+1. SimpleCallback() 생성 시 onMove()와 onSwiped()의 방향을 정할 수 있음. 본 코드에서는 '상하좌우 / 좌'로 설정.
+
+2. onMove()
+
+   RecyclerView와 RecyclerView의 시작(이동 전) ViewHolder, 끝(이동 후) ViewHolder를 받아와서 adapterPosition을 바꿈.
+
+3. onSwiped()
+
+   RecyclerView.ViewHolder와 direction(swiped direction)를 받아서 removeAt() 메소드로 해당 adapterPostion의 데이터를 삭제하고 notifyItemRemoved() 메소드로 어댑터에서 RecyclerView에 반영하도록 함.
+
+```Kotlin
+fun itemTouchHelper(adapter : ProfileAdapter) : ItemTouchHelper{
+    val helper = ItemTouchHelper(object :
+        ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+            ItemTouchHelper.START
+        ) {
+        override fun onMove( 
+            recyclerView: RecyclerView,
+            from: RecyclerView.ViewHolder,
+            to: RecyclerView.ViewHolder
+        ): Boolean {
+            val fromPosition = from.adapterPosition
+            val toPosition = to.adapterPosition
+            adapter.notifyItemMoved(fromPosition, toPosition)
+            return false
+        }
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { 
+            adapter.data.removeAt(viewHolder.adapterPosition)
+            adapter.notifyItemRemoved(viewHolder.adapterPosition)
+        }
+    })
+    return helper
+}
+```
+
+</br>
+
+> RecyclerViewActivity.kt
+
+1. profileAdapter를 가진 itemTouchHelper를 생성해서 attachToRecyclerView의 인자로 RecyclerView를 넣어줌.
+
+```Kotlin
+class RecyclerViewActivity : AppCompatActivity() {
+    private lateinit var profileAdapter : ProfileAdapter // lateinit으로 초기화를 늦춤
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_recyclerview)
+
+        ...
+        
+        val helper = itemTouchHelper(profileAdapter) // itemTouchHelper 사용
+        helper.attachToRecyclerView(main_rcv)
+        
+        ...
+    }
+
+    ...
+}
+```
 
