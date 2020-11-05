@@ -2,9 +2,9 @@
 
 </br>
 
-* [1주차 과제](Seminar 1)
+* [1주차 과제](#Seminar 1)
 
-* [2주차 과제](Seminar 2)
+* [2주차 과제](#Seminar 2)
 
 </br>
 
