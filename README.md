@@ -263,7 +263,7 @@ if(MySharedPreferences.getAutologin(this)) { // 자동로그인이 표시되어 
 
 ## Seminar 2
 
-###### 제출 일자 : 2020.10.30 (remove기능은 31일)
+###### 제출 일자 : 2020.10.30 (remove update 2020.10.31)
 
 ### 실행 화면
 
