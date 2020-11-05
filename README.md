@@ -14,7 +14,7 @@
 
 ### 코드 설명
 
-bulb: **startActivityForResult**
+**startActivityForResult**
 
 > MainActivity.kt
 
@@ -100,7 +100,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 </br>
 
-bulb: **SharedPreferences**
+**SharedPreferences**
 
 > MySharedPreferences.kt
 
