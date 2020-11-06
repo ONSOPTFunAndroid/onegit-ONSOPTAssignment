@@ -31,8 +31,8 @@ class ViewPagerActivity : AppCompatActivity() {
             }
         })
 
-        // 바텀 네비게이션 세팅
-        sample_bottom_navi.setOnNavigationItemReselectedListener {
+        // Bottom Navigation 세팅
+        sample_bottom_navi.setOnNavigationItemSelectedListener {
             var index by Delegates.notNull<Int>()
             when (it.itemId) {
                 R.id.menu_profile -> index = 0
