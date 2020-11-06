@@ -14,6 +14,5 @@ class MainViewPagerAdapter (fm : FragmentManager) :
         2 -> SettingFragment()
         else -> throw IllegalStateException("Unexpcted position $position")
     }
-
     override fun getCount(): Int = 3
 }

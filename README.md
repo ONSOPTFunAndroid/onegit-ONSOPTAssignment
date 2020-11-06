@@ -590,22 +590,21 @@ class RecyclerViewActivity : AppCompatActivity() {
 
 **ViewPager / ViewPagerAdapter / BottomNavigation**
 
-> HomeViewPagerAdapter.kt
+> ProfileViewPagerAdapter.kt
 
 1. 프로필 안에서 사용할 ViewPagerAdapter
 2. Adapter는 FragmentManager 필요
 3. 보여지는 화면 기준으로 양 옆 프래그먼트를 제외한 나머지를 완전히 파괴하여 메모리 누수 관리에 효과적인 FragmentStatePagerAdapter 사용
 
 ```Kotlin
-class HomeViewPagerAdapter (fm : FragmentManager) :
+class ProfileViewPagerAdapter (fm : FragmentManager) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     override fun getItem(position: Int): Fragment = when(position){
-        0 -> FirstFragment()
-        1 -> SecondFragment()
+        0 -> ProfileInfoFragment()
+        1 -> ProfileOtherFragment()
         else -> throw IllegalStateException("Unexpcted position $position")
     }
-
     override fun getCount(): Int = 2
 }
 ```
@@ -619,16 +618,15 @@ class HomeViewPagerAdapter (fm : FragmentManager) :
 3. Adapter가 onBind() 메소드를 이용하여 data class에 있는 데이터를 해당 아이템뷰에 있는 텍스트뷰에 저장
 
 ```Kotlin
-class MainVwPagerAdapter (fm : FragmentManager) :
+class MainViewPagerAdapter (fm : FragmentManager) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     override fun getItem(position: Int): Fragment = when(position){
-        0 -> HomeFragment()
-        1 -> RecyclerFragment()
-        2 -> ThirdFragment()
+        0 -> ProfileFragment()
+        1 -> PortfolioFragment()
+        2 -> SettingFragment()
         else -> throw IllegalStateException("Unexpcted position $position")
     }
-
     override fun getCount(): Int = 3
 }
 ```
@@ -639,18 +637,18 @@ class MainVwPagerAdapter (fm : FragmentManager) :
 
 1. supportFragment로 프래그먼트 매니저를 불러옴
 2. ViewPager에 선언한 Adapter 장착
-3. setOnNavigationItemReselectedListener을 사용해 바텀 네비게이션에 있는 항목을 누를 때마다 해당 화면으로 이동
+3. setOnNavigationItemReselectedListener을 사용해 Bottom Navigation에 있는 항목을 누를 때마다 해당 화면으로 이동
 4. ViewPager의 화면전환을 감지하는 addOnPageChangeListener 리스너
 
 ```Kotlin
 class ViewPagerActivity : AppCompatActivity() {
-    private lateinit var viewPagerAdapter: SampleViewPagerAdapter
+    private lateinit var viewPagerAdapter: MainViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_pager)
 
-        viewPagerAdapter = SampleViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
 
         sample_bottom_viewpager.adapter = viewPagerAdapter
 
@@ -672,9 +670,9 @@ class ViewPagerActivity : AppCompatActivity() {
         sample_bottom_navi.setOnNavigationItemReselectedListener {
             var index by Delegates.notNull<Int>()
             when (it.itemId) {
-                R.id.menu_group -> index = 0
-                R.id.menu_home -> index = 1
-                R.id.menu_people -> index = 2
+                R.id.menu_profile -> index = 0
+                R.id.menu_portfolio -> index = 1
+                R.id.menu_setting -> index = 2
             }
             sample_bottom_viewpager.currentItem = index
             true
@@ -689,26 +687,26 @@ class ViewPagerActivity : AppCompatActivity() {
 
 </br>
 
-> Homefragment.kt
+> Profilefragment.kt
 
 1. setupWithViewPager()를 사용하여 TabLayout에 ViewPager 연동
 2. getTabAt(index)?.text = ""를 통해 각 인덱스와 일치하는 탭 아이템 title 작성
 
 
 ```Kotlin
-class HomeFragment : Fragment() {
-    private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
+class ProfileFragment : Fragment() {
+    private lateinit var homeViewPagerAdapter: ProfileViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        homeViewPagerAdapter = HomeViewPagerAdapter(childFragmentManager)
+        homeViewPagerAdapter = ProfileViewPagerAdapter(childFragmentManager)
 
         vp_home.adapter = homeViewPagerAdapter
 

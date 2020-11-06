@@ -13,6 +13,5 @@ class ProfileViewPagerAdapter (fm : FragmentManager) :
         1 -> ProfileOtherFragment()
         else -> throw IllegalStateException("Unexpcted position $position")
     }
-
     override fun getCount(): Int = 2
 }
