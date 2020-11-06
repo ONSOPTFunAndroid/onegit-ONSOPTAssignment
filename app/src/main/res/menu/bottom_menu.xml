@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_group"
-        android:icon="@drawable/ic_baseline_group_work_24"
-        android:title="@string/group" />
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/profile" />
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/home" />
+        android:id="@+id/menu_portfolio"
+        android:icon="@drawable/ic_baseline_assignment_24"
+        android:title="@string/portfolio" />
     <item
-        android:id="@+id/menu_people"
-        android:icon="@drawable/ic_baseline_people_24"
-        android:title="@string/people" />
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/setting" />
 </menu>

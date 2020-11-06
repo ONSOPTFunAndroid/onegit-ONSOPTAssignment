@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A9F4DF"
-    tools:context=".SecondFragment">
+    android:background="#FBD0D0"
+    tools:context=".ProfileInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/txt_fragment_second"
+        android:id="@+id/txt_fragment_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="home2"
+        android:text="INFO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,13 +7,13 @@ import kotlinx.android.synthetic.main.activity_view_pager.*
 import kotlin.properties.Delegates
 
 class ViewPagerActivity : AppCompatActivity() {
-    private lateinit var viewPagerAdapter: SampleViewPagerAdapter
+    private lateinit var viewPagerAdapter: MainViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_pager)
 
-        viewPagerAdapter = SampleViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
 
         sample_bottom_viewpager.adapter = viewPagerAdapter
 
@@ -35,9 +35,9 @@ class ViewPagerActivity : AppCompatActivity() {
         sample_bottom_navi.setOnNavigationItemReselectedListener {
             var index by Delegates.notNull<Int>()
             when (it.itemId) {
-                R.id.menu_group -> index = 0
-                R.id.menu_home -> index = 1
-                R.id.menu_people -> index = 2
+                R.id.menu_profile -> index = 0
+                R.id.menu_portfolio -> index = 1
+                R.id.menu_setting -> index = 2
             }
             sample_bottom_viewpager.currentItem = index
             true

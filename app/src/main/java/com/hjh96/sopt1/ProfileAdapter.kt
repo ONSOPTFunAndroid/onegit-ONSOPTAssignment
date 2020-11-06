@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<ProfileViewHolder>()  {
 
     var data = mutableListOf<ProfileData>() // ProfileData를 가져옴
-    var layoutItem = R.layout.activity_profile
+    var layoutItem = R.layout.item_linear_profile
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
         val view = LayoutInflater.from(context).inflate(layoutItem,parent,false)

@@ -5,13 +5,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import java.lang.IllegalStateException
 
-class SampleViewPagerAdapter (fm : FragmentManager) :
+class MainViewPagerAdapter (fm : FragmentManager) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     override fun getItem(position: Int): Fragment = when(position){
-        0 -> HomeFragment()
-        1 -> RecyclerFragment()
-        2 -> ThirdFragment()
+        0 -> ProfileFragment()
+        1 -> PortfolioFragment()
+        2 -> SettingFragment()
         else -> throw IllegalStateException("Unexpcted position $position")
     }
 

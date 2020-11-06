@@ -14,7 +14,7 @@ class RecyclerViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_second)
+        setContentView(R.layout.activity_recyclerview)
 
         profileAdapter = ProfileAdapter(this) // this = RecyclerViewActivity
 
@@ -55,12 +55,12 @@ class RecyclerViewActivity : AppCompatActivity() {
                 System.exit(0)
             }
             R.id.item_menu_linear -> {
-                profileAdapter.LayoutChange(R.layout.activity_profile)
+                profileAdapter.LayoutChange(R.layout.item_linear_profile)
                 main_rcv.adapter = profileAdapter
                 main_rcv.layoutManager = LinearLayoutManager(this@RecyclerViewActivity)
             }
             R.id.item_menu_grid -> {
-                profileAdapter.LayoutChange(R.layout.activity_gridprofile)
+                profileAdapter.LayoutChange(R.layout.item_grid_profile)
                 main_rcv.adapter = profileAdapter
                 main_rcv.layoutManager = GridLayoutManager(this@RecyclerViewActivity, 3)
             }

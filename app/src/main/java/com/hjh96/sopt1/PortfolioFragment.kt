@@ -2,15 +2,12 @@ package com.hjh96.sopt1
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_recyclerview.*
-import java.util.zip.Inflater
 
-class RecyclerFragment : Fragment() {
+class PortfolioFragment : Fragment() {
     private lateinit var profileAdapter : ProfileAdapter // lateinit으로 초기화를 늦춤
 
     override fun onCreateView(
@@ -19,8 +16,7 @@ class RecyclerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_recycler, container, false)
-
+        return inflater.inflate(R.layout.fragment_portfolio, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,12 +59,12 @@ class RecyclerFragment : Fragment() {
                 //System.exit(0)
             }
             R.id.item_menu_linear -> {
-                profileAdapter.LayoutChange(R.layout.activity_profile)
+                profileAdapter.LayoutChange(R.layout.item_linear_profile)
                 main_rcv.adapter = profileAdapter
                 main_rcv.layoutManager = LinearLayoutManager(view?.context)
             }
             R.id.item_menu_grid -> {
-                profileAdapter.LayoutChange(R.layout.activity_gridprofile)
+                profileAdapter.LayoutChange(R.layout.item_grid_profile)
                 main_rcv.adapter = profileAdapter
                 main_rcv.layoutManager = GridLayoutManager(view?.context, 3)
             }
