@@ -49,5 +49,4 @@ object MySharedPreferences {
         editor.clear()
         editor.apply()
     }
-
 }

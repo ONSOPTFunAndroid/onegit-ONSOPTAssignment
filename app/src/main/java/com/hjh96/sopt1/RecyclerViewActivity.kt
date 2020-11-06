@@ -14,7 +14,7 @@ class RecyclerViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recyclerview)
+        setContentView(R.layout.fragment_second)
 
         profileAdapter = ProfileAdapter(this) // this = RecyclerViewActivity
 

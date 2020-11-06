@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if(MySharedPreferences.getAutologin(this)) { // 자동로그인이 표시되어 있으면 바로 HomeActivity로 화면 전환
-            val intent = Intent(this, RecyclerViewActivity::class.java)
+            val intent = Intent(this, ViewPagerActivity::class.java)
             startActivity(intent)
         }
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                     MySharedPreferences.setAutologin(this,true)
                 else
                     MySharedPreferences.setAutologin(this,false)
-                val intent = Intent(this, RecyclerViewActivity::class.java)
+                val intent = Intent(this, ViewPagerActivity::class.java)
                 startActivity(intent)
             }else{
                 Toast.makeText(this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()

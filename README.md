@@ -3,8 +3,8 @@
 </br>
 
 * [Seminar 1](#Seminar-1)
-
 * [Seminar 2](#Seminar-2)
+* [Seminar 3](#Seminar-3)
 
 </br>
 
@@ -574,3 +574,16 @@ class RecyclerViewActivity : AppCompatActivity() {
 }
 ```
 
+
+
+## Seminar 3
+
+###### 제출 일자 : 2020.10.06 (코드설명 미작성)
+
+### 실행 화면
+
+![alt text](https://github.com/ONSOPTFunAndroid/onegit-ONSOPTAssignment/blob/master/picture/SOPT_Assignment_3.gif)
+
+
+
+### 코드 설명
