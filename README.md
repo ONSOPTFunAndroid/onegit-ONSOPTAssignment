@@ -578,7 +578,7 @@ class RecyclerViewActivity : AppCompatActivity() {
 
 ## Seminar 3
 
-###### 제출 일자 : 2020.10.06 (코드설명 미작성)
+###### 제출 일자 : 2020.10.06 
 
 ### 실행 화면
 
@@ -667,7 +667,7 @@ class ViewPagerActivity : AppCompatActivity() {
         })
 
         // 바텀 네비게이션 세팅
-        sample_bottom_navi.setOnNavigationItemReselectedListener {
+        sample_bottom_navi.setOnNavigationItemSelectedListener {
             var index by Delegates.notNull<Int>()
             when (it.itemId) {
                 R.id.menu_profile -> index = 0
