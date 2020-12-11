@@ -3,8 +3,11 @@ package com.hjh96.sopt1
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +19,35 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ViewPagerActivity::class.java)
             startActivity(intent)
         }
+
+
+        // 로그인 id 입력 됐을 시 배경 변경
+        edt_main_inputId.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                //텍스트를 입력 후
+                if(edt_main_inputId.text.toString() != "")
+                    edt_main_inputId.setBackgroundResource(R.drawable.main_edt_active)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //텍스트 입력 전
+            } override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // 텍스트 입력 중
+            }
+        })
+
+        // 로그인 password 입력 됐을 시 배경 변경
+        edt_main_inputPasswd.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                //텍스트를 입력 후
+                if(edt_main_inputPasswd.text.toString() != "")
+                    edt_main_inputPasswd.setBackgroundResource(R.drawable.main_edt_active)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //텍스트 입력 전
+            } override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // 텍스트 입력 중
+            }
+        })
 
         // 회원가입 텍스트뷰 이벤트
         txt_main_signUp.setOnClickListener {

@@ -5,7 +5,10 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.hjh96.sopt1"
         minSdkVersion 16
@@ -37,5 +40,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // https://github.com/square/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // Retrofit라이브러리 응답으로 가짜 객체를 만들기 위함
+    implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+    // https://github.com/google/gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+    // Retrofit에서 Gson 을 사용하기 위한 라이브러리
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

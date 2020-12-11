@@ -5,4 +5,5 @@
     <string name="profile">Profile</string>
     <string name="portfolio">Portfolio</string>
     <string name="setting">Setting</string>
+    <string name="signup"><u>회원가입 하러가기</u></string>
 </resources>

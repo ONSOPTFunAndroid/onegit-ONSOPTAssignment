@@ -720,3 +720,239 @@ class ProfileFragment : Fragment() {
 }
 ```
 
+
+
+## Seminar 6
+
+###### 제출 일자 : 2020.10.06 
+
+### 실행 화면
+
+![alt text](https://github.com/ONSOPTFunAndroid/onegit-ONSOPTAssignment/blob/master/picture/SOPT_Assignment_6_0.gif)
+
+![alt text](https://github.com/ONSOPTFunAndroid/onegit-ONSOPTAssignment/blob/master/picture/SOPT_Assignment_6_0_signup_postman.PNG)
+
+![alt text](https://github.com/ONSOPTFunAndroid/onegit-ONSOPTAssignment/blob/master/picture/SOPT_Assignment_6_0_signin_postman.PNG)
+
+
+
+### 코드 설명
+
+**RequestSignUpData / ResponseSignUpData / RequestLoginData / ResponseLoginData**
+
+> RequestSignUpdata.kt
+
+1. 회원가입 시 서버에게 전송할 데이터 클래스
+
+```Kotlin
+data class RequestSignUpData (
+    val email : String,
+    val password : String,
+    val userName : String
+)
+```
+
+</br>
+
+> ResponseSignUpData .kt
+
+1. 회원가입 시 서버에게 받을 데이터 클래스
+
+```Kotlin
+data class ResponseSignUpData(
+    val status : Int,
+    val success : Boolean,
+    val message : String,
+    val data : SignUpData
+) {
+    data class SignUpData(
+        val email : String,
+        val password : String,
+        val userName : String
+    )
+}
+```
+
+</br>
+
+> RequestLoginData .kt
+
+1. 로그인 시 서버에게 전송할 데이터 클래스
+
+```Kotlin
+data class RequestLoginData(
+    val email : String,
+    val password : String
+)
+```
+
+</br>
+
+> ResponseLoginData**.kt
+
+1. 로그인 시 서버에게 받을 데이터 클래스
+
+```Kotlin
+data class ResponseLoginData(
+    val status : Int,
+    val success : Boolean,
+    val message : String,
+    val data : LoginData
+) {
+    data class LoginData(
+        val email : String,
+        val password : String,
+        val userName : String
+    )
+}
+```
+
+</br>
+
+**build.gradle (Module.app)**
+
+> dependencies 추가
+
+```Kotlin
+ // https://github.com/square/retrofit
+ implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+ // Retrofit라이브러리 응답으로 가짜 객체를 만들기 위함
+ implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+
+ // https://github.com/google/gson
+ implementation 'com.google.code.gson:gson:2.8.6'
+
+ // Retrofit에서 Gson 을 사용하기 위한 라이브러리
+ implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+```
+
+</br>
+
+**인터넷 사용 권한 및 http 사용 권한 추가**
+
+> AndroidManifest.xml
+
+```Kotlin
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hjh96.sopt1.api">
+    <!--    retrofit 사용을 위한 인터넷 사용권한 추가-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:usesCleartextTraffic="true"
+```
+
+</br>
+
+**Interface**
+
+> SoptService.kt
+
+1. 통신 시 부를 함수들의 프로토타입 모음
+2. @Headers : 요청 헤더
+3. @POST : POST 경로
+4. @Body : 요청 바디(Request~~~~Data)
+5. Call : 응답 바디(Response~~~~Data)
+
+```Kotlin
+package com.hjh96.sopt1.api
+
+import com.hjh96.sopt1.RequestLoginData
+import com.hjh96.sopt1.RequestSignUpData
+import com.hjh96.sopt1.ResponseLoginData
+import com.hjh96.sopt1.ResponseSignUpData
+import retrofit2.Call
+import retrofit2.http.*
+
+interface SoptService {
+    // 회원가입
+    @Headers("Content-Type: application/json")
+    @POST("/users/signup")
+    fun postSignUp(
+        @Body body: RequestSignUpData
+    ) : Call<ResponseSignUpData>
+
+    // 로그인
+    @Headers("Content-Type: application/json")
+    @POST("/users/signin")
+    fun postLogin(
+        @Body body : RequestLoginData
+    ) : Call<ResponseLoginData>
+}
+```
+
+</br>
+
+**Object**
+
+> SoptServiceImpl.kt
+
+1. 인터페이스를 구현하여 통신 기능이 있는 변수들의 모음
+2. Retrofit.Builder() : 빌더 생성
+3. baseUrl(BASE_URL) : 빌더에 베이스 전달
+4. addConverterFactory(GsonConverterFactory.create()) : Gson 연동
+5. build() : Retrofit 객체 반환
+6. baseRetrofit.create(SoptService:: class.java) : 실제 구현체 생성
+
+```Kotlin
+package com.hjh96.sopt1.api
+
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object SoptServiceImpl {
+    private const val BASE_URL = "http://15.164.83.210:3000"
+
+    private val baseRetrofit : Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    val baseService : SoptService = baseRetrofit.create(SoptService:: class.java)
+}
+```
+
+</br>
+
+**Call**
+
+</br>
+
+> SignUpActivity.kt
+
+1. 통신이 필요한 부분
+2. enqueue() : 실제 서버 통신을 비동기적으로 요청
+3. onResponse() : 통신 성공 시 호출, response.body()에 데이터 존재
+
+
+```Kotlin
+val call : Call<ResponseSignUpData> = SoptServiceImpl.baseService.postSignUp(
+                RequestSignUpData(email = email, password = password, userName = userName)
+            )
+            call.enqueue(object : Callback<ResponseSignUpData> {
+                override fun onFailure(call: Call<ResponseSignUpData>, t: Throwable) {
+                    // 통신 실패 로직
+                    Log.d("tag", t.localizedMessage)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseSignUpData>,
+                    response: Response<ResponseSignUpData>
+                ) {
+                    response.takeIf { it.isSuccessful }
+                        ?.body()
+                        ?.let { it ->
+                            // do something
+                        } ?: showError(response.errorBody())
+                }
+            })
+        }
+    }
+
+    private fun showError(error : ResponseBody?) {
+        val e = error ?: return
+        val ob = JSONObject(e.string())
+        Toast.makeText(this, ob.getString("message"), Toast.LENGTH_LONG).show()
+    }
+```
+

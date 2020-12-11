@@ -29,6 +29,12 @@ class ProfileAdapter(private val context : Context) : RecyclerView.Adapter<Profi
         }
     }
 
+    fun shuffle() {
+        this.data.shuffle()
+        notifyDataSetChanged()
+    }
+
+
     override fun getItemCount(): Int = data.size // 데이터 사이즈 == 아이템 개수
 //    override fun getItemCount(): Int {
 //        return data.size
