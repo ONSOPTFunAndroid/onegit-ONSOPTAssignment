@@ -789,7 +789,7 @@ data class RequestLoginData(
 
 </br>
 
-> ResponseLoginData**.kt
+> ResponseLoginData.kt
 
 1. 로그인 시 서버에게 받을 데이터 클래스
 
