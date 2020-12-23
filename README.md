@@ -5,6 +5,7 @@
 * [Seminar 1](#Seminar-1)
 * [Seminar 2](#Seminar-2)
 * [Seminar 3](#Seminar-3)
+* [Seminar 6](#Seminar-6)
 
 </br>
 
@@ -64,7 +65,7 @@ companion object { // companion object를 사용하면 자바에서 정적 변�
                 Toast.makeText(this,"빈칸이 있습니다.", Toast.LENGTH_SHORT).show()
             else {
                 Toast.makeText(this, "회원가입 완료", Toast.LENGTH_SHORT).show() 
-                // 모든 사항이 적혔으면 intent.puExtra를 사용하여 id와 passwd 전달
+                // 모든 사항이 적혔으면 intent.putExtra를 사용하여 id와 passwd 전달
                 val intent = Intent()
                 intent.putExtra("signup_id", id)
                 intent.putExtra("signup_passwd", passwd)
@@ -334,7 +335,7 @@ class ProfileViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
    아이템뷰를 가진 ProfileViewHolder를 생성
 
-   itemView.setOnClickListener를 통해 해당 adapterPosition에 해당하는 데이터를 가져와서 DetailProfileActivity에 intent.puExtra() 데이터를 저장 후 startActivity(intent)로 인텐트 전송
+   itemView.setOnClickListener를 통해 해당 adapterPosition에 해당하는 데이터를 가져와서 DetailProfileActivity에 intent.putExtra() 데이터를 저장 후 startActivity(intent)로 인텐트 전송
 
 4. getItemCount()
 
@@ -637,7 +638,7 @@ class MainViewPagerAdapter (fm : FragmentManager) :
 
 1. supportFragment로 프래그먼트 매니저를 불러옴
 2. ViewPager에 선언한 Adapter 장착
-3. setOnNavigationItemReselectedListener을 사용해 Bottom Navigation에 있는 항목을 누를 때마다 해당 화면으로 이동
+3. setOnNavigationItemSelectedListener을 사용해 Bottom Navigation에 있는 항목을 누를 때마다 해당 화면으로 이동
 4. ViewPager의 화면전환을 감지하는 addOnPageChangeListener 리스너
 
 ```Kotlin
